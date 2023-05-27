@@ -17,13 +17,14 @@ function ablock = AddCaveTunnel(seed, chunkX, chunkZ, ablock, x, y, z, radius, y
         isRoom = 1;
     end
     fork = randi(fix(count / 2)) - 1 + fix(count / 4); % 分叉点，位于洞穴长度1/4-3/4内的随机位置
+    steep = randi(6) == 1;
     while index < count
         horRadius = 1.5 + sin(index / count * pi) * radius; % 实际半径在初始半径的基础上随当前长度变化，中间宽，两头窄
         verRadius = horRadius * heightFactor; % 房间的高度为宽度的一半
         x = x + cos(yaw) * cos(pitch); % 挖掘位置朝着指定方向移动一个单位长度
         y = y + sin(pitch);
         z = z + sin(yaw) * cos(pitch);
-        if randi(6) == 1 % 限制俯仰角，避免大量竖直洞穴
+        if steep % 限制俯仰角，避免大量竖直洞穴
             pitch = pitch * 0.92;
         else
             pitch = pitch * 0.7;
